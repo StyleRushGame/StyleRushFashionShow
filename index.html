@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleRush Fashion Show</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(180deg, #fff0f7, #f7e9ff);
+    color: #35152d;
+    min-height: 100vh;
+}
+
+.app {
+    max-width: 500px;
+    margin: auto;
+    min-height: 100vh;
+    background: #fff;
+}
+
+.header {
+    background: linear-gradient(135deg, #ff4fa3, #8d45ff);
+    color: white;
+    padding: 22px 18px;
+    border-radius: 0 0 25px 25px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back {
+    font-size: 25px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.currency {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.money {
+    background: rgba(255,255,255,0.2);
+    padding: 9px 13px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.content {
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 18px 0 12px;
+}
+
+.section-subtitle {
+    color: #8d7185;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.item {
+    background: #fff;
+    border-radius: 18px;
+    padding: 12px 7px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(120,50,100,0.12);
+    position: relative;
+}
+
+.item-image {
+    height: 100px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #fce4f0, #eee1ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    margin-bottom: 8px;
+}
+
+.item-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.price {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #7b4c8c;
+}
+
+.buy {
+    border: none;
+    margin-top: 8px;
+    width: 100%;
+    padding: 7px;
+    border-radius: 12px;
+    background: #ff4fa3;
+    color: white;
+    font-weight: bold;
+}
+
+.limited {
+    background: linear-gradient(135deg, #171321, #50356e);
+    color: white;
+    border-radius: 22px;
+    padding: 22px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.limited h2 {
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.timer {
+    color: #ffd45c;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.collection-button {
+    background: #fff;
+    color: #4c245e;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.categories {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.category {
+    white-space: nowrap;
+    border: none;
+    background: #f5e7f2;
+    padding: 10px 15px;
+    border-radius: 20px;
+    color: #542849;
+}
+
+.category.active {
+    background: #ff4fa3;
+    color: white;
+}
+
+.reward {
+    background: linear-gradient(135deg, #fff3b0, #ffd5e8);
+    border-radius: 20px;
+    padding: 18px;
+    margin-top: 20px;
+}
+
+.reward h3 {
+    margin-bottom: 6px;
+}
+
+.reward button {
+    margin-top: 12px;
+    border: none;
+    background: #7c42d8;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.bottom-nav {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 5px;
+    margin-top: 25px;
+}
+
+.nav-item {
+    text-align: center;
+    font-size: 11px;
+    color: #806579;
+}
+
+.nav-item span {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 3px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="header">
+
+        <div class="header-top">
+            <div class="back">←</div>
+            <div class="title">STYLE SHOP</div>
+            <div>♡</div>
+        </div>
+
+        <div class="currency">
+            <div class="money">🪙 12,850</div>
+            <div class="money">💎 340</div>
+        </div>
+
+    </header>
+
+    <main class="content">
+
+        <div class="section-title">🔥 New Arrivals</div>
+
+        <div class="section-subtitle">
+            Fresh fashion has just landed!
+        </div>
+
+        <div class="items">
+
+            <div class="item">
+                <div class="item-image">👗</div>
+                <div class="item-name">Midnight Gown</div>
+                <div class="price">🪙 1,200</div>
+                <button class="buy" onclick="buyItem('Midnight Gown')">
+                    BUY
+                </button>
+            </div>
+
+            <div class="item">
+                <div class="item-image">👠</div>
+                <div class="item-name">Crystal Heels</div>
+                <div class="price">🪙 800</div>
+                <button class="buy" onclick="buyItem('Crystal Heels')">
+                    BUY
+                </button>
+            </div>
+
+            <div class="item">
+                <div class="item-image">👜</div>
+                <div class="item-name">Black Pearl Bag</div>
+                <div class="price">🪙 950</div>
+                <button class="buy" onclick="buyItem('Black Pearl Bag')">
+                    BUY
+                </button>
+            </div>
+
+        </div>
+
+        <div class="section-title">✨ Limited Collection</div>
+
+        <div class="limited">
+
+            <h2>🌙 MIDNIGHT GLAM</h2>
+
+            <div class="timer">
+                ⏰ 24 HOURS LEFT
+            </div>
+
+            <p style="margin-bottom:15px;">
+                Step into the night and own the runway.
+            </p>
+
+            <button class="collection-button"
+                    onclick="openCollection()">
+                SHOP COLLECTION
+            </button>
+
+        </div>
+
+        <div class="section-title">🛍️ Shop Categories</div>
+
+        <div class="categories">
+
+            <button class="category active"
+                    onclick="category('Fashion')">
+                👗 Fashion
+            </button>
+
+            <button class="category"
+                    onclick="category('Beauty')">
+                💄 Beauty
+            </button>
+
+            <button class="category"
+                    onclick="category('VIP')">
+                👑 VIP
+            </button>
+
+            <button class="category"
+                    onclick="category('Accessories')">
+                👜 Accessories
+            </button>
+
+        </div>
+
+        <div class="section-title">✨ This Week</div>
+
+        <div class="items">
+
+            <div class="item">
+                <div class="item-image">💎</div>
+                <div class="item-name">Diamond Choker</div>
+                <div class="price">💎 90</div>
+                <button class="buy" onclick="buyItem('Diamond Choker')">
+                    BUY
+                </button>
+            </div>
+
+            <div class="item">
+                <div class="item-image">💄</div>
+                <div class="item-name">Glam Makeup</div>
+                <div class="price">💎 70</div>
+                <button class="buy" onclick="buyItem('Glam Makeup')">
+                    BUY
+                </button>
+            </div>
+
+            <div class="item">
+                <div class="item-image">✨</div>
+                <div class="item-name">Star Effect</div>
+                <div class="price">💎 120</div>
+                <button class="buy" onclick="buyItem('Star Effect')">
+                    BUY
+                </button>
+            </div>
+
+        </div>
+
+        <div class="reward">
+
+            <h3>📺 Free Fashion Reward</h3>
+
+            <p>
+                Watch a short video and receive
+                <strong>+500 🪙</strong>
+            </p>
+
+            <button onclick="watchAd()">
+                ▶ WATCH & EARN
+            </button>
+
+        </div>
+
+    </main>
+
+    <nav class="bottom-nav">
+
+        <div class="nav-item">
+            <span>🏠</span>
+            Home
+        </div>
+
+        <div class="nav-item">
+            <span>👗</span>
+            Wardrobe
+        </div>
+
+        <div class="nav-item">
+            <span>🛍️</span>
+            Shop
+        </div>
+
+        <div class="nav-item">
+            <span>🏆</span>
+            Battles
+        </div>
+
+        <div class="nav-item">
+            <span>👤</span>
+            Profile
+        </div>
+
+    </nav>
+
+</div>
+
+<script>
+
+function buyItem(item) {
+    alert("✨ " + item + " selected!\n\nPurchase system coming next.");
+}
+
+function openCollection() {
+    alert("🌙 MIDNIGHT GLAM\n\nThe Limited Collection is opening!");
+}
+
+function category(name) {
+    alert("🛍️ " + name + " Store\n\nMore items will appear here.");
+}
+
+function watchAd() {
+    alert("📺 Rewarded Ad\n\n+500 🪙 will be added after the video.");
+}
+
+</script>
+
+</body>
+  </html>
