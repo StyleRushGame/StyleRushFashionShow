@@ -727,6 +727,365 @@ setInterval(saveShopData, 2000);
 loadShopData();
 
 </script>
+<!-- ============================= -->
+<!-- STYLERUSH WARDROBE -->
+<!-- ============================= -->
 
+<style>
+#wardrobeScreen {
+    display: none;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #fff0f7, #f7e9ff);
+    padding-bottom: 30px;
+}
+
+.wardrobe-header {
+    background: linear-gradient(135deg, #ff4fa3, #8d45ff);
+    color: white;
+    padding: 22px 18px;
+    border-radius: 0 0 25px 25px;
+}
+
+.wardrobe-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.wardrobe-back {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 26px;
+}
+
+.wardrobe-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.wardrobe-content {
+    padding: 20px;
+}
+
+.wardrobe-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.wardrobe-tab {
+    border: none;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    white-space: nowrap;
+    color: #542849;
+}
+
+.wardrobe-tab.active {
+    background: #ff4fa3;
+    color: white;
+}
+
+.wardrobe-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.wardrobe-item {
+    background: white;
+    border-radius: 20px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(120,50,100,0.12);
+}
+
+.wardrobe-image {
+    height: 120px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #fce4f0, #eee1ff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+    margin-bottom: 10px;
+}
+
+.wardrobe-name {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.wear-button {
+    border: none;
+    background: #7c42d8;
+    color: white;
+    width: 100%;
+    padding: 9px;
+    border-radius: 14px;
+    margin-top: 9px;
+    font-weight: bold;
+}
+
+.empty-wardrobe {
+    background: white;
+    border-radius: 22px;
+    padding: 35px 20px;
+    text-align: center;
+    color: #806579;
+}
+
+.equipped {
+    border: 3px solid #ff4fa3;
+}
+</style>
+
+<div id="wardrobeScreen">
+
+    <div class="wardrobe-header">
+
+        <div class="wardrobe-top">
+
+            <button class="wardrobe-back" onclick="closeWardrobe()">
+                ←
+            </button>
+
+            <div class="wardrobe-title">
+                MY WARDROBE
+            </div>
+
+            <div>👗</div>
+
+        </div>
+
+    </div>
+
+    <div class="wardrobe-content">
+
+        <div class="wardrobe-tabs">
+
+            <button class="wardrobe-tab active">
+                👗 All
+            </button>
+
+            <button class="wardrobe-tab">
+                👗 Dresses
+            </button>
+
+            <button class="wardrobe-tab">
+                👠 Shoes
+            </button>
+
+            <button class="wardrobe-tab">
+                👜 Accessories
+            </button>
+
+            <button class="wardrobe-tab">
+                💄 Beauty
+            </button>
+
+        </div>
+
+        <div id="wardrobeItems" class="wardrobe-grid"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+let equippedItem = null;
+
+
+/* ==========================
+   OPEN WARDROBE
+   ========================== */
+
+function openWardrobe() {
+
+    document.querySelector(".app").style.display = "none";
+
+    document.getElementById("wardrobeScreen").style.display = "block";
+
+    renderWardrobe();
+
+}
+
+
+/* ==========================
+   CLOSE WARDROBE
+   ========================== */
+
+function closeWardrobe() {
+
+    document.getElementById("wardrobeScreen").style.display = "none";
+
+    document.querySelector(".app").style.display = "block";
+
+}
+
+
+/* ==========================
+   ITEM INFORMATION
+   ========================== */
+
+function getWardrobeIcon(item) {
+
+    const icons = {
+
+        "Midnight Gown": "👗",
+
+        "Crystal Heels": "👠",
+
+        "Black Pearl Bag": "👜",
+
+        "Diamond Choker": "💎",
+
+        "Glam Makeup": "💄",
+
+        "Star Effect": "✨"
+
+    };
+
+    return icons[item] || "👗";
+
+}
+
+
+/* ==========================
+   DISPLAY OWNED ITEMS
+   ========================== */
+
+function renderWardrobe() {
+
+    const container =
+        document.getElementById("wardrobeItems");
+
+    container.innerHTML = "";
+
+    if (
+        typeof ownedItems === "undefined" ||
+        ownedItems.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="empty-wardrobe"
+                 style="grid-column:1/-1;">
+
+                <div style="font-size:60px;">
+                    👗
+                </div>
+
+                <h3>Your Wardrobe is Empty</h3>
+
+                <p style="margin-top:8px;">
+                    Visit the Style Shop and start
+                    collecting fabulous fashion!
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    ownedItems.forEach(function(item) {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "wardrobe-item";
+
+
+        if (equippedItem === item) {
+
+            card.classList.add("equipped");
+
+        }
+
+
+        card.innerHTML = `
+
+            <div class="wardrobe-image">
+                ${getWardrobeIcon(item)}
+            </div>
+
+            <div class="wardrobe-name">
+                ${item}
+            </div>
+
+            <button class="wear-button"
+                    onclick="wearItem('${item}')">
+
+                ${equippedItem === item
+                    ? "✓ WEARING"
+                    : "WEAR"}
+
+            </button>
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================
+   WEAR ITEM
+   ========================== */
+
+function wearItem(item) {
+
+    equippedItem = item;
+
+    renderWardrobe();
+
+    alert(
+        "✨ OUTFIT UPDATED!\n\n" +
+        item +
+        " is now equipped."
+    );
+
+}
+
+
+/* ==========================
+   CONNECT EXISTING
+   WARDROBE BUTTON
+   ========================== */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const navItems =
+        document.querySelectorAll(".nav-item");
+
+    navItems.forEach(function(nav) {
+
+        const text =
+            nav.innerText.toLowerCase();
+
+        if (text.includes("wardrobe")) {
+
+            nav.style.cursor = "pointer";
+
+            nav.onclick = function() {
+
+                openWardrobe();
+
+            };
+
+        }
+
+    });
+
+});
+
+</script>
 </body>
   </html>
