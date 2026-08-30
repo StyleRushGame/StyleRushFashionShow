@@ -409,21 +409,322 @@ body {
 
 <script>
 
-function buyItem(item) {
-    alert("✨ " + item + " selected!\n\nPurchase system coming next.");
+let coins = 12850;
+let gems = 340;
+
+let ownedItems = [];
+let wishlist = [];
+
+function updateCurrency() {
+
+    document.querySelectorAll(".money")[0].innerHTML =
+        "🪙 " + coins.toLocaleString();
+
+    document.querySelectorAll(".money")[1].innerHTML =
+        "💎 " + gems.toLocaleString();
 }
+
+
+// ==========================
+// BUY ITEMS
+// ==========================
+
+function buyItem(item) {
+
+    const prices = {
+
+        "Midnight Gown": {
+            type: "coins",
+            price: 1200
+        },
+
+        "Crystal Heels": {
+            type: "coins",
+            price: 800
+        },
+
+        "Black Pearl Bag": {
+            type: "coins",
+            price: 950
+        },
+
+        "Diamond Choker": {
+            type: "gems",
+            price: 90
+        },
+
+        "Glam Makeup": {
+            type: "gems",
+            price: 70
+        },
+
+        "Star Effect": {
+            type: "gems",
+            price: 120
+        }
+
+    };
+
+    const product = prices[item];
+
+    if (!product) return;
+
+    if (ownedItems.includes(item)) {
+
+        alert("💖 You already own " + item + "!");
+
+        return;
+    }
+
+    if (product.type === "coins") {
+
+        if (coins < product.price) {
+
+            alert("🪙 You don't have enough coins!");
+
+            return;
+        }
+
+        coins -= product.price;
+
+    } else {
+
+        if (gems < product.price) {
+
+            alert("💎 You don't have enough gems!");
+
+            return;
+        }
+
+        gems -= product.price;
+    }
+
+    ownedItems.push(item);
+
+    updateCurrency();
+
+    alert(
+        "✨ PURCHASE SUCCESSFUL!\n\n" +
+        item + " has been added to your wardrobe. 👗"
+    );
+
+}
+
+
+// ==========================
+// LIMITED COLLECTION
+// ==========================
 
 function openCollection() {
-    alert("🌙 MIDNIGHT GLAM\n\nThe Limited Collection is opening!");
+
+    alert(
+        "🌙 MIDNIGHT GLAM\n\n" +
+        "✨ Midnight Gown\n" +
+        "👠 Crystal Heels\n" +
+        "👜 Black Pearl Bag\n\n" +
+        "⏰ Available for a limited time!"
+    );
+
 }
+
+
+// ==========================
+// SHOP CATEGORIES
+// ==========================
 
 function category(name) {
-    alert("🛍️ " + name + " Store\n\nMore items will appear here.");
+
+    if (name === "Fashion") {
+
+        alert(
+            "👗 FASHION STORE\n\n" +
+            "Dresses\n" +
+            "Tops\n" +
+            "Bottoms\n" +
+            "Jackets\n" +
+            "Coats\n" +
+            "Shoes"
+        );
+
+    }
+
+    else if (name === "Beauty") {
+
+        alert(
+            "💄 BEAUTY STORE\n\n" +
+            "Makeup\n" +
+            "Hairstyles\n" +
+            "Nails\n" +
+            "Lashes\n" +
+            "Face Details"
+        );
+
+    }
+
+    else if (name === "VIP") {
+
+        alert(
+            "👑 STYLERUSH VIP\n\n" +
+            "💎 Daily Gems\n" +
+            "🎁 VIP Clothing\n" +
+            "💄 Exclusive Makeup\n" +
+            "✨ Runway Effects\n" +
+            "🎟️ Extra Event Tickets\n\n" +
+            "VIP NEVER guarantees competition wins."
+        );
+
+    }
+
+    else if (name === "Accessories") {
+
+        alert(
+            "👜 ACCESSORIES\n\n" +
+            "Bags\n" +
+            "Jewelry\n" +
+            "Glasses\n" +
+            "Hats\n" +
+            "Belts"
+        );
+
+    }
+
 }
 
+
+// ==========================
+// REWARDED AD
+// ==========================
+
 function watchAd() {
-    alert("📺 Rewarded Ad\n\n+500 🪙 will be added after the video.");
+
+    const reward = 500;
+
+    coins += reward;
+
+    updateCurrency();
+
+    alert(
+        "📺 REWARD COMPLETE!\n\n" +
+        "+500 🪙 coins added!"
+    );
+
 }
+
+
+// ==========================
+// WISHLIST
+// ==========================
+
+function addToWishlist(item) {
+
+    if (!wishlist.includes(item)) {
+
+        wishlist.push(item);
+
+        alert(
+            "❤️ Added to Wishlist!\n\n" +
+            item
+        );
+
+    } else {
+
+        alert(
+            "❤️ " + item +
+            " is already on your Wishlist!"
+        );
+
+    }
+
+}
+
+
+// ==========================
+// SAVE GAME DATA
+// ==========================
+
+function saveShopData() {
+
+    localStorage.setItem(
+        "styleRushCoins",
+        coins
+    );
+
+    localStorage.setItem(
+        "styleRushGems",
+        gems
+    );
+
+    localStorage.setItem(
+        "styleRushOwnedItems",
+        JSON.stringify(ownedItems)
+    );
+
+    localStorage.setItem(
+        "styleRushWishlist",
+        JSON.stringify(wishlist)
+    );
+
+}
+
+
+// ==========================
+// LOAD GAME DATA
+// ==========================
+
+function loadShopData() {
+
+    const savedCoins =
+        localStorage.getItem("styleRushCoins");
+
+    const savedGems =
+        localStorage.getItem("styleRushGems");
+
+    const savedItems =
+        localStorage.getItem("styleRushOwnedItems");
+
+    const savedWishlist =
+        localStorage.getItem("styleRushWishlist");
+
+
+    if (savedCoins !== null) {
+
+        coins = Number(savedCoins);
+
+    }
+
+    if (savedGems !== null) {
+
+        gems = Number(savedGems);
+
+    }
+
+    if (savedItems !== null) {
+
+        ownedItems =
+            JSON.parse(savedItems);
+
+    }
+
+    if (savedWishlist !== null) {
+
+        wishlist =
+            JSON.parse(savedWishlist);
+
+    }
+
+    updateCurrency();
+
+}
+
+
+// Automatically save whenever the page changes
+
+setInterval(saveShopData, 2000);
+
+
+// Load saved data
+
+loadShopData();
 
 </script>
 
